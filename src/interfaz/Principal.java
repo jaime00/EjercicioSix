@@ -5,6 +5,8 @@
  */
 package interfaz;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jaime
@@ -14,8 +16,10 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
+    double v[];
     public Principal() {
         initComponents();
+        txtLongitud.requestFocusInWindow();
     }
 
     /**
@@ -75,15 +79,35 @@ public class Principal extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cmdCrear.setText("Crear");
+        cmdCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCrearActionPerformed(evt);
+            }
+        });
         jPanel3.add(cmdCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 130, -1));
 
         cmdLlenarManual.setText("Llenar Manual");
+        cmdLlenarManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdLlenarManualActionPerformed(evt);
+            }
+        });
         jPanel3.add(cmdLlenarManual, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 130, -1));
 
         cmdLlenarAutomatico.setText("Llenar Automatico");
+        cmdLlenarAutomatico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdLlenarAutomaticoActionPerformed(evt);
+            }
+        });
         jPanel3.add(cmdLlenarAutomatico, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 130, -1));
 
         cmdBorrar.setText("Borrar");
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
         jPanel3.add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 130, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 170, 200));
@@ -92,6 +116,11 @@ public class Principal extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cmdComprobar.setText("Comprobar");
+        cmdComprobar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdComprobarActionPerformed(evt);
+            }
+        });
         jPanel4.add(cmdComprobar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, -1));
 
         jLabel3.setText("Resultado:");
@@ -127,7 +156,72 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLongitudActionPerformed
 
     private void txtLongitudKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLongitudKeyTyped
+
+        char c=evt.getKeyChar(); 
+          if(!Character.isDigit(c)) { 
+              getToolkit().beep(); 
+              evt.consume(); 
+         }  
     }//GEN-LAST:event_txtLongitudKeyTyped
+
+    private void cmdCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCrearActionPerformed
+
+        if(txtLongitud.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Digite la longitud del vector");
+            txtLongitud.requestFocusInWindow();
+        }else if(Integer.parseInt(txtLongitud.getText())==0){
+            JOptionPane.showMessageDialog(this,"No se puede Digitar cero en la longitud","ERROR",JOptionPane.ERROR_MESSAGE);
+            txtLongitud.requestFocusInWindow();
+            txtLongitud.selectAll();
+        }else{
+            int longitud= Integer.parseInt(txtLongitud.getText());
+            v=  new double [longitud];
+            JOptionPane.showMessageDialog(this, "Vector creado exitosamente");
+        }
+    }//GEN-LAST:event_cmdCrearActionPerformed
+
+    private void cmdLlenarManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLlenarManualActionPerformed
+            double n;
+        for (int i = 0; i < v.length; i++) {
+            n=Double.parseDouble(JOptionPane.showInputDialog(this,"Digite el elemento (pos "+i+")"));
+            v[i]=n;
+            }
+        JOptionPane.showMessageDialog(this, "Vector llenado exitosamente");
+    }//GEN-LAST:event_cmdLlenarManualActionPerformed
+
+    private void cmdLlenarAutomaticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLlenarAutomaticoActionPerformed
+            double n;
+        for (int i = 0; i < v.length; i++) {
+             n=(int)(Math.random()*50+ 1);
+           v[i]=n;
+         }
+        JOptionPane.showMessageDialog(this, "Vector llenado exitosamente");
+    }//GEN-LAST:event_cmdLlenarAutomaticoActionPerformed
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+
+        txtLongitud.setText("");
+        txtResultado.setText("");
+        
+        txtLongitud.requestFocusInWindow();       
+    }//GEN-LAST:event_cmdBorrarActionPerformed
+
+    private void cmdComprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdComprobarActionPerformed
+
+        int n2=v.length-1;
+        int cont = 0;
+    
+    for (int i=0; i<v.length/2; i++){
+        if (v[i] == v[n2]) {
+            cont++;
+            }
+        }
+        if(cont>0){
+        txtResultado.append("el vector es simetrico");
+        }else{
+        txtResultado.append("el vector no es simetrico");
+    }
+    }//GEN-LAST:event_cmdComprobarActionPerformed
 
     /**
      * @param args the command line arguments
